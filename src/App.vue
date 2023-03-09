@@ -35,9 +35,7 @@
 import PdfContent from "@/components/PdfContent";
 // import VueHtml2pdf from "@/components/VueHtml2pdf";
 import ControlsContainer from "@/components/ControlsContainer";
-import VueHtml2pdf from 'vue-html2pdf'
-// import VueHtml2pdf from "vue-html2pdf-test";
-import { mapFields } from "vuex-map-fields";
+import VueHtml2pdf from "vue-html2pdf";
 
 export default {
   name: "app",
@@ -47,18 +45,29 @@ export default {
       contentRendered: false,
       progress: 0,
       generatingPdf: false,
-      pdfDownloaded: false,
+      pdfDownloaded: true,
+      controlValue: {
+        showLayout: false,
+        floatLayout: true,
+        enableDownload: true,
+        previewModal: false,
+        paginateElementsByHeight: 1100,
+        manualPagination: false,
+        filename: "ficherodeprueba.pdf",
+        pdfQuality: 2,
+        pdfFormat: "a4",
+        pdfOrientation: "portrait",
+        pdfContentWidth: "800px",
+      },
     };
   },
 
   computed: {
-    ...mapFields(["controlValue"]),
-
     htmlToPdfOptions() {
       return {
         margin: 0,
 
-        filename: "hee hee.pdf",
+        filename: "ficherodeprueba.pdf",
 
         image: {
           type: "jpeg",
@@ -69,7 +78,7 @@ export default {
 
         html2canvas: {
           scale: this.controlValue.pdfQuality,
-          useCORS: true,
+          useCORS: false,
         },
 
         jsPDF: {
@@ -79,6 +88,9 @@ export default {
         },
       };
     },
+  },
+  mounted() {
+    this.downloadPdf()
   },
 
   methods: {
@@ -145,34 +157,34 @@ export default {
 
     onProgress(progress) {
       this.progress = progress;
-      console.log(`PDF generation progress: ${progress}%`)
+      console.log(`PDF generation progress: ${progress}%`);
     },
 
     startPagination() {
-      console.log(`PDF has started pagination`)
+      console.log(`PDF has started pagination`);
     },
 
-    hasPaginated () {
-      console.log(`PDF has been paginated`)
+    hasPaginated() {
+      console.log(`PDF has been paginated`);
     },
 
-    async beforeDownload ({ html2pdf, options, pdfContent }) {
-      console.log(`On Before PDF Generation`)
+    async beforeDownload({ html2pdf, options, pdfContent }) {
+      console.log(`On Before PDF Generation`);
       // await html2pdf().set(options).from(pdfContent).toPdf().get('pdf').then((pdf) => {
-			// 	const totalPages = pdf.internal.getNumberOfPages()
-			// 	for (let i = 1; i <= totalPages; i++) {
-			// 		pdf.setPage(i)
-			// 		pdf.setFontSize(10)
-			// 		pdf.setTextColor(150)
-			// 		pdf.text('Page ' + i + ' of ' + totalPages, (pdf.internal.pageSize.getWidth() * 0.88), (pdf.internal.pageSize.getHeight() - 0.3))
-			// 	} 
-			// }).save()
+      // 	const totalPages = pdf.internal.getNumberOfPages()
+      // 	for (let i = 1; i <= totalPages; i++) {
+      // 		pdf.setPage(i)
+      // 		pdf.setFontSize(10)
+      // 		pdf.setTextColor(150)
+      // 		pdf.text('Page ' + i + ' of ' + totalPages, (pdf.internal.pageSize.getWidth() * 0.88), (pdf.internal.pageSize.getHeight() - 0.3))
+      // 	}
+      // }).save()
     },
 
-    hasDownloaded (blobPdf) {
-      console.log(`PDF has downloaded yehey`)
-      this.pdfDownloaded = true
-      console.log(blobPdf)
+    hasDownloaded(blobPdf) {
+      console.log(`PDF has downloaded yehey`);
+      this.pdfDownloaded = true;
+      console.log(blobPdf);
     },
 
     domRendered() {

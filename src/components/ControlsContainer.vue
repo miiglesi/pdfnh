@@ -110,7 +110,6 @@
 </template>
 
 <script>
-import { mapFields } from 'vuex-map-fields'
 
 export default {
     props: {
@@ -122,6 +121,19 @@ export default {
 
     data () {
         return {
+            controlValue: {
+            showLayout: false,
+            floatLayout: true,
+            enableDownload: true,
+            previewModal: true,
+            paginateElementsByHeight: 1100,
+            manualPagination: false,
+            filename: 'Hee Hee',
+            pdfQuality: 2,
+            pdfFormat: 'a4',
+            pdfOrientation: 'portrait',
+            pdfContentWidth: '800px'
+        },
             controls: [
 				{
 					label: 'show-layout:',
@@ -215,10 +227,6 @@ export default {
     },
 
     computed: {
-        ...mapFields([
-            'controlValue'
-        ]),
-
         isGenerating () {
             return this.progress !== 0 && this.progress !== 100
         }
