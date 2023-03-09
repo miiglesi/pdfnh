@@ -78,8 +78,7 @@ export default {
 
         html2canvas: {
           scale: this.controlValue.pdfQuality,
-          useCORS: false,
-        },
+          useCORS: false,        },
 
         jsPDF: {
           unit: "in",
